@@ -5,17 +5,20 @@ pr: none
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+- name: GithubServiceConnection
+  value: 'GitConnection'
 
 stages:
   - stage: build
     jobs:
     - job: artifacts
       steps:
-      # - task: GithubFlowVersion@0
-      #   displayName: 'create version'
-      #   name: version
-      #   inputs:
-      #     gitHubEnterpriseConnection: $(GithubServiceConnection)
+      - task: GithubFlowVersionTest@0
+        displayName: 'create version'
+        name: version
+        inputs:
+          gitHubEnterpriseConnection: $(GithubServiceConnection)
 
       - task: SamTDebug@0
         displayName: 'Sam Debug'
