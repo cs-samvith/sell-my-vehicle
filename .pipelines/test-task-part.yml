@@ -1,0 +1,50 @@
+trigger: none
+
+pr: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+- name: GithubServiceConnection
+  value: 'GitConnection'
+
+stages:
+  - stage: build
+    jobs:
+    - job: artifacts
+      steps:
+      - task: GithubFlowVersionTest@0
+        displayName: 'create version'
+        name: version
+        inputs:
+          gitHubConnection: $(GithubServiceConnection)
+
+      - task: SamTDebug@0
+        displayName: 'Sam Debug'
+        name: Debug
+        inputs:
+          samplestring: 'samplestring'
+
+    #   - task: GithubFlowReleaseTest@0
+    #     displayName: 'draft release'
+    #     inputs:
+    #       gitHubConnection: $(GithubServiceConnection)
+    #       tag: $(version.tag)
+    #       body: $(version.body)
+    #       draft: true
+
+    # - job: set_release
+    #   displayName: 'Set Release'
+    #   dependsOn: 
+    #     - artifacts
+    #   variables:
+    #     tag: $[dependencies.artifacts.outputs['version.tag']]
+    #     body: $[dependencies.artifacts.outputs['version.body']]
+    #   steps:
+    #   - task: GithubFlowReleaseTest@0
+    #     displayName: 'create release'
+    #     inputs:
+    #       gitHubConnection: $(GithubServiceConnection)
+    #       tag: $(tag)
+    #       body: $(body)
