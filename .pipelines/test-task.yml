@@ -36,6 +36,8 @@ stages:
 
     - job: set_release
       displayName: 'Set Release'
+      dependsOn: 
+        - artifacts
       variables:
         tag: $[stageDependencies.build.artifacts.outputs['version.tag']]
         body: $[stageDependencies.build.artifacts.outputs['version.body']]
