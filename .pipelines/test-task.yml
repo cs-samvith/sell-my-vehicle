@@ -39,12 +39,12 @@ stages:
       dependsOn: 
         - artifacts
       variables:
-        tag: $[stageDependencies.build.artifacts.outputs['version.tag']]
-        body: $[stageDependencies.build.artifacts.outputs['version.body']]
+        tag: $[dependencies.artifacts.outputs['version.tag']]
+        body: $[dependencies.artifacts.outputs['version.body']]
       steps:
       - task: GithubFlowReleaseTest@0
         displayName: 'create release'
         inputs:
-          gitHubConnection: ${{variables.GithubServiceConnection}}
+          gitHubConnection: $(GithubServiceConnection)
           tag: $(tag)
           body: $(body)
