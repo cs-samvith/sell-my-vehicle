@@ -26,7 +26,7 @@ stages:
         inputs:
           samplestring: 'samplestring'
 
-      - task: GithubFlowRelease@0
+      - task: GithubFlowReleaseTest@0
         displayName: 'draft release'
         inputs:
           gitHubConnection: $(GithubServiceConnection)
@@ -42,7 +42,7 @@ stages:
         tag: $[stageDependencies.build.artifacts.outputs['version.tag']]
         body: $[stageDependencies.build.artifacts.outputs['version.body']]
       steps:
-      - task: GithubFlowRelease@0
+      - task: GithubFlowReleaseTest@0
         displayName: 'create release'
         inputs:
           gitHubConnection: ${{variables.GithubServiceConnection}}
