@@ -25,3 +25,24 @@ stages:
         name: Debug
         inputs:
           samplestring: 'samplestring'
+
+      - task: GithubFlowRelease@0
+        displayName: 'draft release'
+        inputs:
+          gitHubConnection: $(GithubServiceConnection)
+          tag: $(version.tag)
+          body: $(version.body)
+          draft: true
+
+    - job: set_release
+      displayName: 'Set Release'
+      variables:
+        tag: $[stageDependencies.build.artifacts.outputs['version.tag']]
+        body: $[stageDependencies.build.artifacts.outputs['version.body']]
+      steps:
+      - task: GithubFlowRelease@0
+        displayName: 'create release'
+        inputs:
+          gitHubConnection: ${{variables.GithubServiceConnection}}
+          tag: $(tag)
+          body: $(body)
