@@ -1,0 +1,24 @@
+trigger: none
+
+pr: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+
+stages:
+  - stage: build
+    jobs:
+    - job: artifacts
+      steps:
+      # - task: GithubFlowVersion@0
+      #   displayName: 'create version'
+      #   name: version
+      #   inputs:
+      #     gitHubEnterpriseConnection: $(GithubServiceConnection)
+
+      - task: SamTDebug@0
+        displayName: 'Sam Debug'
+        name: Debug
+        inputs:
+          samplestring: 'samplestring'
